@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "120670118682",
+    "firebase_url": "https://planung-24450.firebaseio.com",
+    "project_id": "planung-24450",
+    "storage_bucket": "planung-24450.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120670118682:android:9df21d9996cc2932",
+        "android_client_info": {
+          "package_name": "TestFireBase.TestFireBase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120670118682-ghff3h90vqntpcvi1h29cphhkmqr67o8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "TestFireBase.TestFireBase",
+            "certificate_hash": "395e6a4f80834113ab2bf9b66c7069626d015d58"
+          }
+        },
+        {
+          "client_id": "120670118682-63sqsm7dmdaq00udvfq98nvv7pno1hv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnRBszuYjL0NvxnalrCROh942kuM0I9JE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120670118682-63sqsm7dmdaq00udvfq98nvv7pno1hv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120670118682:android:ca6e985f640d6eab",
+        "android_client_info": {
+          "package_name": "com.example.admin.planungsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120670118682-3htgeskj7rllioh83q933g44m55ecgov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admin.planungsapp",
+            "certificate_hash": "8e53bcfeda6ba78943fc8fcd42e92bb655c25881"
+          }
+        },
+        {
+          "client_id": "120670118682-63sqsm7dmdaq00udvfq98nvv7pno1hv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnRBszuYjL0NvxnalrCROh942kuM0I9JE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120670118682-63sqsm7dmdaq00udvfq98nvv7pno1hv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
