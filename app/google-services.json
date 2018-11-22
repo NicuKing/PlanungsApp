@@ -67,6 +67,22 @@
           }
         },
         {
+          "client_id": "120670118682-8cch7i50at0nnmq7pn119vml2hol6p5l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admin.planungsapp",
+            "certificate_hash": "bdb2fbd7b1537cd30c5889154ef90e6d64d38831"
+          }
+        },
+        {
+          "client_id": "120670118682-0l453n8pv3sjaec7s71t2m6orj0l0u2a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admin.planungsapp",
+            "certificate_hash": "e40b8c7dbd32f7170b8ee9d57e8e554c6e877651"
+          }
+        },
+        {
           "client_id": "120670118682-63sqsm7dmdaq00udvfq98nvv7pno1hv7.apps.googleusercontent.com",
           "client_type": 3
         }
