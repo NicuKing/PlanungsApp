@@ -1,5 +1,6 @@
 package com.example.admin.planungsapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,6 +33,9 @@ public class CreateProjects extends AppCompatActivity {
             public void onClick(View v) {
                 Database.child("Projekte").child(Name.getText().toString()).child("beschreibung").setValue(Description.getText().toString());
                 Database.child("User_Projekt").child("Username").child(Name.getText().toString()).setValue(Name.getText().toString());
+                Intent intentMain = new Intent(CreateProjects.this ,
+                        ListProjects.class);
+                CreateProjects.this.startActivity(intentMain);
             }
         });
     }
