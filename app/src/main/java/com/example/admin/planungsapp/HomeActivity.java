@@ -1,5 +1,9 @@
 package com.example.admin.planungsapp;
 
+<<<<<<< HEAD
+=======
+import android.content.Intent;
+>>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +17,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+<<<<<<< HEAD
+=======
+import com.google.firebase.auth.FirebaseAuth;
+
+>>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -90,8 +99,14 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
+<<<<<<< HEAD
         } else if (id == R.id.nav_send) {
 
+=======
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(HomeActivity.this,MainLogin.class));
+>>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
