@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".CreateUserActivity">
 
     <EditText
-        android:id="@+id/txt_login_email"
+        android:id="@+id/txt_createUser_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/txt_login_pwd"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="51dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
         android:ems="10"
         android:hint="E-Mail"
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/txt_login_pwd"
+        android:id="@+id/txt_createUser_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txt_createUser_email"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="138dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="224dp"
+    <EditText
+        android:id="@+id/txt_createUser_pwd2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="282dp"
-        android:text="Login"
-        tools:text="Login" />
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="Repeat password"
+        android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btn_toSignUp"
-        android:layout_width="225dp"
+        android:id="@+id/btn_createUser"
+        android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="203dp"
+        android:layout_marginBottom="143dp"
         android:text="SignUp" />
 </RelativeLayout>

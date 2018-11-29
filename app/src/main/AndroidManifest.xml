@@ -23,10 +23,9 @@
         <activity android:name=".ListProjects" />
         <activity android:name=".MainCalender" />
         <activity android:name=".MainLogin" />
-<<<<<<< HEAD
+
         <activity android:name=".ViewProject" />
-=======
->>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
@@ -34,7 +33,8 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreateUserActivity"></activity>
     </application>
 
 </manifest>

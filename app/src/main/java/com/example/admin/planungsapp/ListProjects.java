@@ -30,7 +30,7 @@ public class ListProjects extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.project_main);
+        setContentView(R.layout.activity_home);
 
         Database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child("Username");
 

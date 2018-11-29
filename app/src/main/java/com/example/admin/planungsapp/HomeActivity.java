@@ -1,10 +1,10 @@
 package com.example.admin.planungsapp;
 
-<<<<<<< HEAD
-=======
 import android.content.Intent;
->>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
+
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -16,14 +16,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-<<<<<<< HEAD
-=======
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
->>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
+import java.util.ArrayList;
+
+
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DatabaseReference Database;
+    private ListView ProjektList;
+    private ArrayList<String> ProjektNamen = new ArrayList<>();
+    private ArrayList<String> Keys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +63,64 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        Database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child("Username");
+
+        ProjektList = (ListView) findViewById(R.id.lstProjects);
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
+        ProjektList.setAdapter(arrayAdapter);
+
+        final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ViewProject.class);
+                String selected = parent.getItemAtPosition(position).toString();
+                intent.putExtra("ProjektName", selected);
+                startActivity(intent);
+            }
+        };
+
+        Database.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String value = dataSnapshot.getValue(String.class);
+                ProjektNamen.add(value);
+
+                String key = dataSnapshot.getKey();
+                Keys.add(key);
+
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String value = dataSnapshot.getValue(String.class);
+                String key = dataSnapshot.getKey();
+
+                int index = Keys.indexOf(key);
+                ProjektNamen.set(index, value);
+
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        ProjektList.setOnItemClickListener(ListClickedHandler);
     }
 
     @Override
@@ -99,14 +171,11 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-<<<<<<< HEAD
-        } else if (id == R.id.nav_send) {
 
-=======
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(HomeActivity.this,MainLogin.class));
->>>>>>> e44709723346d87108eb4d362780d9a7cbc50337
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
