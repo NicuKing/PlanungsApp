@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,18 +34,18 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+private TextView user;
     private DatabaseReference Database;
     private ListView ProjektList;
     private ArrayList<String> ProjektNamen = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +68,7 @@ public class HomeActivity extends AppCompatActivity
 
         Database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child("Username");
 
-        ProjektList = (ListView) findViewById(R.id.lstProjects);
+        ProjektList = (ListView) findViewById(R.id.lstProjects2);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
         ProjektList.setAdapter(arrayAdapter);
@@ -145,6 +146,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -161,9 +163,13 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_create) {
             // Handle the camera action
+            //
+            startActivity(new Intent(HomeActivity
+                          .this,CreateProjects.class));
         } else if (id == R.id.nav_gallery) {
+
 
         } else if (id == R.id.nav_slideshow) {
 
