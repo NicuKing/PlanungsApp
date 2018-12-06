@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,10 +36,12 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 private TextView user;
-    private DatabaseReference Database;
-    private ListView ProjektList;
     private ArrayList<String> ProjektNamen = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
+    private FirebaseAuth Auth;
+    private FirebaseAuth.AuthStateListener AuthListener;
+    private String uId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,13 +68,13 @@ private TextView user;
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child(uId);
 
-        Database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child("Username");
-
-        ProjektList = (ListView) findViewById(R.id.lstProjects2);
+        ListView projektList = (ListView) findViewById(R.id.lstProjects);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
-        ProjektList.setAdapter(arrayAdapter);
+        projektList.setAdapter(arrayAdapter);
 
         final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
@@ -83,7 +86,7 @@ private TextView user;
             }
         };
 
-        Database.addChildEventListener(new ChildEventListener() {
+        database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 String value = dataSnapshot.getValue(String.class);
@@ -121,7 +124,7 @@ private TextView user;
 
             }
         });
-        ProjektList.setOnItemClickListener(ListClickedHandler);
+        projektList.setOnItemClickListener(ListClickedHandler);
     }
 
     @Override
