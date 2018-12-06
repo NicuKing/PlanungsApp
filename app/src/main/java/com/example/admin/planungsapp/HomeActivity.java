@@ -71,7 +71,7 @@ private TextView user;
         uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child(uId);
 
-        ListView projektList = (ListView) findViewById(R.id.lstProjects);
+        ListView projektList = (ListView) findViewById(R.id.lstProjects2);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
         projektList.setAdapter(arrayAdapter);
