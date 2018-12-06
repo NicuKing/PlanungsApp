@@ -7,7 +7,7 @@
     tools:context=".CreateTask">
 
     <Button
-        android:id="@+id/btnAddTask"
+        android:id="@+id/btnAddTasks"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
