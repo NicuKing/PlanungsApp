@@ -83,6 +83,14 @@
           }
         },
         {
+          "client_id": "120670118682-j31njcrlpb0b95pn6sllq8vsqk1ue7a8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.admin.planungsapp",
+            "certificate_hash": "fdaef73c548a4565f434a893cd9b6af4dca2ee72"
+          }
+        },
+        {
           "client_id": "120670118682-63sqsm7dmdaq00udvfq98nvv7pno1hv7.apps.googleusercontent.com",
           "client_type": 3
         }
