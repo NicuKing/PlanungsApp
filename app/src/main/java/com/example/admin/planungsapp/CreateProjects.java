@@ -10,37 +10,39 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateProjects extends AppCompatActivity {
 
-    private FirebaseAuth.AuthStateListener authListener;
     private Button FirebaseButton;
     private DatabaseReference Database;
     private EditText Name;
     private EditText Description;
-    String projectName;
+    private String uId;
+
+    private FirebaseAuth Auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_create);
 
         Database = FirebaseDatabase.getInstance().getReference();
+        uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Name = (EditText) findViewById(R.id.txtProjectname);
         Description = (EditText) findViewById(R.id.txtProdescription);
-
-
-
 
         FirebaseButton = (Button) findViewById(R.id.btnFirebase);
         FirebaseButton = (Button) findViewById(R.id.btnFirebase);
         FirebaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Database.child("Projekte").child(Name.getText().toString()).child("beschreibung").setValue(Description.getText().toString());
-                Database.child("User_Projekt").child("Username").child(projectName).setValue(Name.getText().toString());
+                String FullProjectName = uId+"_"+Name.getText().toString();
+                Database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(Description.getText().toString());
+                Database.child("User_Projekt").child(uId).child(Name.getText().toString()).setValue(Name.getText().toString());
                 Intent intentMain = new Intent(CreateProjects.this ,
                         HomeActivity.class);
                 CreateProjects.this.startActivity(intentMain);

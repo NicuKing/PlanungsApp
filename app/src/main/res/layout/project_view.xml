@@ -6,8 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/projectName"
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        tools:layout_editor_absoluteX="117dp"
+        tools:layout_editor_absoluteY="52dp" />
+
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnToCreateTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="138dp"
@@ -16,9 +24,29 @@
         android:layout_marginEnd="158dp"
         android:layout_marginRight="158dp"
         android:layout_marginBottom="244dp"
-        android:text="Button"
+        android:text="Tasks erstellen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btnToCreateDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="116dp"
+        android:layout_marginRight="116dp"
+        android:text="Create Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="371dp" />
+
+    <Button
+        android:id="@+id/btnToCalender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="to Dates"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="298dp" />
 </android.support.constraint.ConstraintLayout>
