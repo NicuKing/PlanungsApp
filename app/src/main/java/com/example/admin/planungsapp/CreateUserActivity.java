@@ -50,11 +50,9 @@ public class CreateUserActivity extends AppCompatActivity {
         email = input_email.getText().toString();
         pwd = input_pwd.getText().toString();
         pwd2 = input_pwd2.getText().toString();
+
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pwd) || TextUtils.isEmpty(pwd2)) {
             Toast.makeText(CreateUserActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
-        }
-        else if(pwd != pwd2){
-            Toast.makeText(CreateUserActivity.this, "Passwords are different", Toast.LENGTH_LONG).show();
         }
         else{
             mAuth.createUserWithEmailAndPassword(email, pwd)

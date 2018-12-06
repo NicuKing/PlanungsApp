@@ -45,17 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnviewp = (Button) findViewById(R.id.btnViewProjects);
-        btnviewp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent viewprojects = new Intent(MainActivity.this, ListProjects.class);
-
-                startActivity(viewprojects);
-
-            }
-        });
 
         btncalender = (Button) findViewById(R.id.btnCalender);
         btncalender.setOnClickListener(new View.OnClickListener() {
