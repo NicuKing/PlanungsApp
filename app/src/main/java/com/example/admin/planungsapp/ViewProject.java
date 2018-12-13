@@ -140,10 +140,10 @@ public class ViewProject extends AppCompatActivity {
         startActivity(toDate);
     }
     private void toAddTask(){
-        Intent toDate = new Intent(getApplicationContext(),CreateTask.class);
+        Intent toTask = new Intent(getApplicationContext(),CreateTask.class);
         Intent lastIntent = getIntent();
-        toDate.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
-        startActivity(toDate);
+        toTask.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
+        startActivity(toTask);
     }
     private void toCalender(){
         Intent toDate = new Intent(getApplicationContext(),MainCalender.class);
