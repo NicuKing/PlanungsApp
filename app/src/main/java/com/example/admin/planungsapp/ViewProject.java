@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -76,6 +77,18 @@ public class ViewProject extends AppCompatActivity {
 
         taskListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,taskName);
         listTast.setAdapter(taskListe);
+
+        final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), ChangeTasks.class);
+                Intent getIntent = getIntent();
+                String selected = parent.getItemAtPosition(position).toString();
+                intent.putExtra("taskName", selected);
+                intent.putExtra("projectName", getIntent.getStringExtra("ProjektName"));
+                startActivity(intent);
+            }
+        };
         database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -116,6 +129,7 @@ public class ViewProject extends AppCompatActivity {
 
             }
         });
+        listTast.setOnItemClickListener(ListClickedHandler);
     }
 
     private void toAddDate(){
