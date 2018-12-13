@@ -24,11 +24,11 @@ public class CreateTask extends AppCompatActivity {
 
         //Views
         inpTask = findViewById(R.id.txtTaskName);
-        taskName = inpTask.getText().toString();
+
         btnAddTask = findViewById(R.id.btnAddTasks);
-        Intent oldIntent = getIntent();
-        projectName = oldIntent.getStringExtra("ProjektName");
-        Database = FirebaseDatabase.getInstance().getReference();
+
+
+
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,7 +40,12 @@ public class CreateTask extends AppCompatActivity {
 
     private void addTask(){
         // Database.child("User_Projekt").child("Username").child(projectName).setValue(Name.getText().toString());
-        Database.child("Projekte").child(projectName).child("Anforderungen").setValue(taskName);
-
+        Database = FirebaseDatabase.getInstance().getReference();
+        Intent oldIntent = getIntent();
+        taskName = inpTask.getText().toString();
+       Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(taskName).setValue(taskName);
+        Intent intent = new Intent(getApplicationContext(), ViewProject.class);
+        intent.putExtra("ProjektName",projectName);
+            startActivity(intent);
     }
 }

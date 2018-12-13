@@ -6,47 +6,115 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/projectName"
-        android:layout_width="150dp"
-        android:layout_height="20dp"
-        tools:layout_editor_absoluteX="117dp"
-        tools:layout_editor_absoluteY="52dp" />
-
-
-    <Button
-        android:id="@+id/btnToCreateTask"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="138dp"
-        android:layout_marginLeft="138dp"
-        android:layout_marginTop="219dp"
-        android:layout_marginEnd="158dp"
-        android:layout_marginRight="158dp"
-        android:layout_marginBottom="244dp"
-        android:text="Tasks erstellen"
-        app:layout_constraintBottom_toBottomOf="parent"
+      >
+
+        <TextView
+            android:id="@+id/projectName"
+            android:layout_width="150dp"
+            android:layout_height="20dp" />
+
+
+        <Button
+            android:id="@+id/btnToCreateTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Tasks erstellen" />
+
+        <Button
+            android:id="@+id/btnToCreateDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:text="Add User" />
+
+        <Button
+            android:id="@+id/btnToCalender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="170dp"
+            android:text="to Dates" />
+
+        <ListView
+            android:id="@+id/lstTasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="220dp">
+
+        </ListView>
+    </RelativeLayout>
+
+
+
+
+
+    <!--
+    Das ist nur die Vorlage von Nicoas Design um die Darstellng hier Umzusetzen
+        <Button
+        android:id="@+id/btnAddTasks"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Add Task"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTaskName" />
 
-    <Button
-        android:id="@+id/btnToCreateDate"
+    <TextView
+        android:id="@+id/useless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="116dp"
-        android:layout_marginRight="116dp"
-        android:text="Create Date"
+        android:layout_marginStart="94dp"
+        android:layout_marginLeft="94dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginRight="94dp"
+        android:text="Add new task"
+        android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="371dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnToCalender"
+    <TextView
+        android:id="@+id/useless1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="to Dates"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="298dp" />
+        android:layout_marginStart="33dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="225dp"
+        android:layout_marginRight="225dp"
+        android:text="Taskname"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/useless" />
+
+
+
+    <EditText
+        android:id="@+id/txtTaskName"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:ems="10"
+        android:hint="Task here"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/useless1" />
+    -->
+
 </android.support.constraint.ConstraintLayout>
