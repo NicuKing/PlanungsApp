@@ -40,9 +40,9 @@ public class CreateProjects extends AppCompatActivity {
         FirebaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String FullProjectName = uId+"_"+Name.getText().toString();
+                String FullProjectName = uId+""+Name.getText().toString();
                 Database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(Description.getText().toString());
-                Database.child("User_Projekt").child(uId).child(Name.getText().toString()).setValue(Name.getText().toString());
+                Database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
                 Intent intentMain = new Intent(CreateProjects.this ,
                         HomeActivity.class);
                 CreateProjects.this.startActivity(intentMain);
