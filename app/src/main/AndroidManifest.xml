@@ -26,6 +26,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewProject" />
+        <activity android:name=".AddUserToProject" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"

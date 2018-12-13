@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class ViewProject extends AppCompatActivity {
 
-    TextView projectName;
-    Button toAddTask, toAddDate, toCalender;
+    TextView projectName, ListEmpty;
+    Button toAddTask, btnToAddUser, toCalender;
     ListView listTast;
     ArrayAdapter taskListe;
     RelativeLayout listUD;
@@ -38,9 +38,10 @@ public class ViewProject extends AppCompatActivity {
 
         //Views
         projectName = (TextView)findViewById(R.id.projectName);
-        toAddDate = (Button)findViewById(R.id.btnToCreateDate);
+        btnToAddUser = (Button)findViewById(R.id.btnToAddUser);
         toAddTask = (Button)findViewById(R.id.btnToCreateTask);
         toCalender = (Button)findViewById(R.id.btnToCalender);
+        ListEmpty = (TextView)findViewById(R.id.txtEmptyList);
 
         Intent intent = getIntent();
         String proName = intent.getStringExtra("ProjektName");
@@ -53,10 +54,10 @@ public class ViewProject extends AppCompatActivity {
             }
         });
 
-        toAddDate.setOnClickListener(new View.OnClickListener() {
+        btnToAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toAddDate();
+                toAddUser();
             }
         });
 
@@ -67,7 +68,7 @@ public class ViewProject extends AppCompatActivity {
             }
         });
 
-        addTasksToList(proName);
+            addTasksToList(proName);
     }
 
     private void addTasksToList(String proName) {
@@ -118,12 +119,12 @@ public class ViewProject extends AppCompatActivity {
         });
     }
 
-    private void toAddDate(){
-        Intent toDate = new Intent(getApplicationContext(),MainCalender.class);
+    private void toAddUser(){
+        Intent toAddUser = new Intent(getApplicationContext(),AddUserToProject.class);
         Intent lastIntent = getIntent();
         // Replace with Create Activity
-        toDate.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
-        startActivity(toDate);
+        toAddUser.putExtra("projektName", lastIntent.getStringExtra("ProjektName"));
+        startActivity(toAddUser);
     }
     private void toAddTask(){
         Intent toDate = new Intent(getApplicationContext(),CreateTask.class);
