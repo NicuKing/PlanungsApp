@@ -75,7 +75,6 @@ private TextView user;
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
         projektList.setAdapter(arrayAdapter);
-
         final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,6 +84,7 @@ private TextView user;
                 startActivity(intent);
             }
         };
+
 
         database.addChildEventListener(new ChildEventListener() {
             @Override
