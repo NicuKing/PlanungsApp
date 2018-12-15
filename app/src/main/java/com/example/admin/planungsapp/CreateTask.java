@@ -10,24 +10,34 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+/**
+ * Diese Klasse dient dem Erstellen von Tasks
+ * @author René Meisters
+ * @version 1.0.0
+ */
 public class CreateTask extends AppCompatActivity {
 
-    EditText inpTask;
-    Button btnAddTask;
-    String taskName;
-    String projectName;
-    private DatabaseReference Database;
+    private EditText inpTask;
+    private Button btnAddTask;
+    private String taskName;
+    private String projectName;
+    private DatabaseReference database;
+
+    /**
+     *
+     * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
+     * Es wird auf dem Button btnAddTask ein OnClickListener durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_task);
 
         //Views
-        inpTask = findViewById(R.id.txtTaskName);
-
+        inpTask     = findViewById(R.id.txtTaskName);
         btnAddTask = findViewById(R.id.btnAddTasks);
-
-
 
         btnAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,14 +48,19 @@ public class CreateTask extends AppCompatActivity {
 
     }
 
+    /**
+     * In dieser Methode werden Tasks zu dem Projekt in dem sich der Benutzer gerae befindet erstellt
+     */
     private void addTask(){
-        // Database.child("User_Projekt").child("Username").child(projectName).setValue(Name.getText().toString());
-        Database = FirebaseDatabase.getInstance().getReference();
+
+        database = FirebaseDatabase.getInstance().getReference();
         Intent oldIntent = getIntent();
         taskName = inpTask.getText().toString();
-       Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(taskName).setValue(taskName);
+        // Task hinzufügen zum Projekt
+         database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(taskName).setValue(taskName);
+        // Zurück zur ViewProject Activity
         Intent intent = new Intent(getApplicationContext(), ViewProject.class);
         intent.putExtra("ProjektName",projectName);
-            startActivity(intent);
+        startActivity(intent);
     }
 }

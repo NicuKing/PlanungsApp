@@ -15,6 +15,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Diese Activity checkt ob ein Nutzer eingelogt ist
+ * Auch ist es hier möglich sich einzuloggen
+ * @author René Meisters
+ * @version 1.0.0
+ */
 public class MainLogin extends AppCompatActivity {
 
     private EditText inp_email,inp_pwd;
@@ -23,17 +29,28 @@ public class MainLogin extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authListener;
 
+    /**
+     *
+     * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
+     * Es wird auf den Buttons btn_login udn btn_SignUp wird ein OnClickListener durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth        = FirebaseAuth.getInstance();
 
-        inp_email = (EditText)findViewById(R.id.txt_login_email);
-        inp_pwd = (EditText)findViewById(R.id.txt_login_pwd);
-        btn_login = (Button)findViewById(R.id.btn_login);
-        btn_toSignUp = (Button)findViewById(R.id.btn_toSignUp);
+        inp_email    = findViewById(R.id.txt_login_email);
+        inp_pwd      = findViewById(R.id.txt_login_pwd);
+        btn_login    = findViewById(R.id.btn_login);
+        btn_toSignUp = findViewById(R.id.btn_toSignUp);
+
+        /**
+         * Authentication Listener checkt ob benuter eingelggt ist
+         * Wenn ja umleitung zur Home Activity
+         */
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -56,13 +73,18 @@ public class MainLogin extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Authentication Lstener wird gestartet
+     */
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(authListener);
     }
 
+    /**
+     * Starten Login mit Firebase Athentication
+     */
     private void startSignIn(){
         String email = inp_email.getText().toString();
         String password = inp_pwd.getText().toString();

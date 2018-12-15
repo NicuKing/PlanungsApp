@@ -5,6 +5,9 @@ import android.app.Application;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Diese Klase dient daz eine Aktuelle Instanz von der Datenbank zu kriegen
+ */
 public class FireApp extends Application {
 
     @Override

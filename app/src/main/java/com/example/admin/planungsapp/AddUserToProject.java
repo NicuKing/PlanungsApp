@@ -50,14 +50,14 @@ public class AddUserToProject extends AppCompatActivity {
 
         //Views
         addUserButton = findViewById(R.id.btnDoAdd);
-        addUserUid = findViewById(R.id.txtAddUser);
-        notFound = findViewById(R.id.txtNotFound);
+        addUserUid    = findViewById(R.id.txtAddUser);
+        notFound      = findViewById(R.id.txtNotFound);
         //Database reference and get uid
-        database = FirebaseDatabase.getInstance().getReference().child("User_Projekt");
-        uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        database   = FirebaseDatabase.getInstance().getReference().child("User_Projekt");
+        uId        = FirebaseAuth.getInstance().getCurrentUser().getUid();
         lastIntent = getIntent();
         //last Intent values
-        final String proName = lastIntent.getStringExtra("projektName");
+        proName    = lastIntent.getStringExtra("projektName");
         //Button OnClickistener
         addUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +99,6 @@ public class AddUserToProject extends AppCompatActivity {
         };
 
         checkUser.addListenerForSingleValueEvent(eventListener);
-        
+
     }
 }

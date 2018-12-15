@@ -21,30 +21,39 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-
+/**
+ * In dieser Activity werden alle Tasks aufgelisten und es gibt eine NAvigation.
+ * @author René Meisters
+ * @version 1.0.0
+ */
 public class ViewProject extends AppCompatActivity {
 
-    TextView projectName, ListEmpty;
-    Button toAddTask, btnToAddUser, toCalender;
-    ListView listTast;
-    ArrayAdapter taskListe;
-    RelativeLayout listUD;
+    private TextView projectName, ListEmpty;
+    private Button toAddTask, btnToAddUser, toCalender;
+    private ListView listTast;
+    private ArrayAdapter taskListe;
+    private RelativeLayout listUD;
     private ArrayList<String> taskName = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
-
+    /**
+     *
+     * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
+     * Es wird auf den Buttons toAddTask, btnToAddUser & toCalender ein OnClickListener durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_view);
 
         //Views
-        projectName = (TextView)findViewById(R.id.projectName);
-        btnToAddUser = (Button)findViewById(R.id.btnToAddUser);
-        toAddTask = (Button)findViewById(R.id.btnToCreateTask);
-        toCalender = (Button)findViewById(R.id.btnToCalender);
-        ListEmpty = (TextView)findViewById(R.id.txtEmptyList);
+        projectName    = findViewById(R.id.projectName);
+        btnToAddUser   = findViewById(R.id.btnToAddUser);
+        toAddTask      = findViewById(R.id.btnToCreateTask);
+        toCalender     = findViewById(R.id.btnToCalender);
+        ListEmpty      = findViewById(R.id.txtEmptyList);
 
-        Intent intent = getIntent();
+        Intent intent  = getIntent();
         String proName = intent.getStringExtra("ProjektName");
         projectName.setText(intent.getStringExtra("ProjektName"));
 
@@ -72,6 +81,10 @@ public class ViewProject extends AppCompatActivity {
             addTasksToList(proName);
     }
 
+    /**
+     * Tasks werden zu einer ArrayList hnzugefügt
+     * @param proName Projektname
+     */
     private void addTasksToList(String proName) {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
         listTast = (ListView)findViewById(R.id.lstTasks);
@@ -133,19 +146,32 @@ public class ViewProject extends AppCompatActivity {
         listTast.setOnItemClickListener(ListClickedHandler);
     }
 
+    /**
+     * Man wird zur AddUser Activity umgeleitet
+     */
     private void toAddUser(){
+
         Intent toAddUser = new Intent(getApplicationContext(),AddUserToProject.class);
+
         Intent lastIntent = getIntent();
         // Replace with Create Activity
         toAddUser.putExtra("projektName", lastIntent.getStringExtra("ProjektName"));
         startActivity(toAddUser);
-    }
+}
+
+    /**
+     * Umleitung zur Create Task Activity
+     */
     private void toAddTask(){
         Intent toTask = new Intent(getApplicationContext(),CreateTask.class);
         Intent lastIntent = getIntent();
         toTask.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
         startActivity(toTask);
     }
+
+    /**
+     * Umleitung zur Kalender Activity
+     */
     private void toCalender(){
         Intent toDate = new Intent(getApplicationContext(),MainCalender.class);
         Intent lastIntent = getIntent();

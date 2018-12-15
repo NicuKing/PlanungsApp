@@ -16,6 +16,11 @@ import java.util.Calendar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Diese Activity dient dem erstellen von Terminen
+ * @author Sebastian Tüscher
+ * @version 1.0.0
+ */
 public class CreateDate extends AppCompatActivity implements View.OnClickListener{
 
     private EditText inp_name, selectDate, selectTime;
@@ -48,9 +53,18 @@ public class CreateDate extends AppCompatActivity implements View.OnClickListene
         selectDate.setOnClickListener(this);
         selectTime.setOnClickListener(this);
     }
+
+    /**
+     *
+     * @return namen vom Termmin
+     */
     public String getDateName(){
         return dateName = inp_name.getText().toString();
     }
+
+    /**
+     * Diese Methode erstellt den Termin
+     */
     private void createDate(){
         Database.child("Projekte")
                 .child("Sebi")

@@ -32,16 +32,26 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-
+/**
+ * Diese Activity ist die Home Seite. Hier sieht man alle PRojekte und kann neue Projekte erstellen
+ * @author Nicolas Lachenal
+ * @version 1.0.0
+ */
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-private TextView user;
+
+    private TextView user;
     private ArrayList<String> ProjektNamen = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
     private FirebaseAuth Auth;
     private FirebaseAuth.AuthStateListener AuthListener;
     private String uId;
 
+    /**
+     * Beim Erstellen dieser Activity werden alle Projekte des angemeldeten Benutzers angezeigt.
+     * Zu dem wird ein ClickListener auf der Liste der Projekte durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +60,7 @@ private TextView user;
         setSupportActionBar(toolbar);
         user = findViewById(R.id.userID);
 
-
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,8 +68,8 @@ private TextView user;
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
-
+        });*/
+        // Sidebar
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,7 +78,7 @@ private TextView user;
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        // Hole uid und Database reference
         uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child(uId);
 
@@ -76,6 +86,7 @@ private TextView user;
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
         projektList.setAdapter(arrayAdapter);
+        // Click events auf dem jeweiligen Items
         final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -128,6 +139,9 @@ private TextView user;
         projektList.setOnItemClickListener(ListClickedHandler);
     }
 
+    /**
+     * OnBackPressed handeling von der Sidebar
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,6 +152,11 @@ private TextView user;
         }
     }
 
+    /**
+     * Lasen von Options in der Sidebar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -161,17 +180,23 @@ private TextView user;
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * ClickEvents auf sidebar
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        // Umleitung auf CreateProjects
         if (id == R.id.nav_create) {
             // Handle the camera action
             //
             startActivity(new Intent(HomeActivity
                           .this,CreateProjects.class));
+            // Logouts
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(HomeActivity.this,MainLogin.class));

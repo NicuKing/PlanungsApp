@@ -14,39 +14,60 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Diese Klasse dient dem Erstellen von Projekten.
+ * @author Nicolas Lachenal
+ * @version 1.0.0
+ */
 public class CreateProjects extends AppCompatActivity {
 
-    private Button FirebaseButton;
-    private DatabaseReference Database;
-    private EditText Name;
-    private EditText Description;
+    private Button firebaseButton;
+    private DatabaseReference database;
+    private EditText name;
+    private EditText description;
     private String uId;
 
     private FirebaseAuth Auth;
-
+    /**
+     *
+     * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
+     * Es wird auf dem Button firebaseButton ein OnClickListener durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.project_create);
 
-        Database = FirebaseDatabase.getInstance().getReference();
-        uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        database       = FirebaseDatabase.getInstance().getReference();
+        uId            = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        name           = findViewById(R.id.txtProjectname);
+        description    = findViewById(R.id.txtProdescription);
 
-        Name = (EditText) findViewById(R.id.txtProjectname);
-        Description = (EditText) findViewById(R.id.txtProdescription);
+        firebaseButton = (Button) findViewById(R.id.btnFirebase);
+        firebaseButton.setOnClickListener(new View.OnClickListener() {
 
-        FirebaseButton = (Button) findViewById(R.id.btnFirebase);
-        FirebaseButton = (Button) findViewById(R.id.btnFirebase);
-        FirebaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String FullProjectName = uId+"_"+Name.getText().toString();
-                Database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(Description.getText().toString());
-                Database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
-                Intent intentMain = new Intent(CreateProjects.this ,
-                        HomeActivity.class);
-                CreateProjects.this.startActivity(intentMain);
+
+              createProject();
+
             }
         });
+    }
+
+    /**
+     * Diese Klasse erstellt Projekte und fügt die Projekte dem Angemeldeten Benutzer hinzu
+     */
+    private void createProject(){
+        // Projektname besteht aus uid des Ersteller und Projektnamen
+        String FullProjectName = uId+"_"+name.getText().toString();
+        // Projekt erstellen
+        database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(description.getText().toString());
+        // Projekt Benutzer hinzufügen
+        database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
+        Intent intentMain = new Intent(CreateProjects.this ,
+                HomeActivity.class);
+        CreateProjects.this.startActivity(intentMain);
     }
 }

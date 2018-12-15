@@ -14,13 +14,24 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Diese Activity dient dem Erstellen von Anforderungen für das jeweilige Projekt.
+ * @author René Meisters
+ * @version 1.0.0
+ */
 public class ChangeTasks extends AppCompatActivity {
 
-    EditText taskName;
-    Button btnChange;
-    Button btnDelete;
-    String name;
+    private EditText taskName;
+    private Button btnChange;
+    private Button btnDelete;
+    private String name;
     private DatabaseReference Database;
+    /**
+     *
+     * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
+     * Es wird auf den Buttons btnChange und btnDelete ein OnClickListener durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +47,7 @@ public class ChangeTasks extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
-        taskName = findViewById(R.id.txtTaskName_Change);
+        taskName  = findViewById(R.id.txtTaskName_Change);
         btnChange = findViewById(R.id.btnChangeTasks);
         btnDelete = findViewById(R.id.btnDeleteTasks);
 
@@ -45,29 +56,42 @@ public class ChangeTasks extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database = FirebaseDatabase.getInstance().getReference();
-                Intent oldIntent = getIntent();
-
-                Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).removeValue();
-                Intent intent = new Intent(getApplicationContext(), ViewProject.class);
-                intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
-                startActivity(intent);
+                deleteTask();
             }
         });
 
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Database = FirebaseDatabase.getInstance().getReference();
-                Intent oldIntent = getIntent();
-
-                Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).setValue(taskName);
-                Intent intent = new Intent(getApplicationContext(), ViewProject.class);
-                intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
-                startActivity(intent);
+                updateTask();
             }
         });
 
     }
 
+    /**
+     * Der Ausgewählte Task wird gelöscht
+     */
+    private void deleteTask(){
+        Database = FirebaseDatabase.getInstance().getReference();
+        Intent oldIntent = getIntent();
+
+        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).removeValue();
+        Intent intent = new Intent(getApplicationContext(), ViewProject.class);
+        intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
+        startActivity(intent);
+    }
+
+    /**
+     * Der Ausgewählt Task wird mit den Nutzereingabe(taskName) geupdated
+     */
+    private void updateTask(){
+        Database = FirebaseDatabase.getInstance().getReference();
+        Intent oldIntent = getIntent();
+
+        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).setValue(taskName);
+        Intent intent = new Intent(getApplicationContext(), ViewProject.class);
+        intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
+        startActivity(intent);
+    }
 }

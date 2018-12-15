@@ -16,13 +16,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * In dieser ctivity können sich User registrieren. Umgesetzt wird das mit hilf on Firebase Authentication
+ */
 public class CreateUserActivity extends AppCompatActivity {
 
-    EditText input_email, input_pwd,input_pwd2;
-    Button btn_signUp;
+    private EditText input_email, input_pwd,input_pwd2;
+    private Button btn_signUp;
+    private String email,pwd, pwd2;
 
     private FirebaseAuth mAuth;
 
+    /**
+     *
+     * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
+     * Es wird auf dem Button btn_signUp ein OnClickListener durchgeführt
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +40,10 @@ public class CreateUserActivity extends AppCompatActivity {
 
         //Views
 
-        input_email = (EditText) findViewById(R.id.txt_createUser_email);
-        input_pwd = (EditText) findViewById(R.id.txt_createUser_pwd);
-        input_pwd2 = (EditText) findViewById(R.id.txt_createUser_pwd2);
-        btn_signUp = (Button) findViewById(R.id.btn_createUser);
+        input_email = findViewById(R.id.txt_createUser_email);
+        input_pwd   = findViewById(R.id.txt_createUser_pwd);
+        input_pwd2  = findViewById(R.id.txt_createUser_pwd2);
+        btn_signUp  = findViewById(R.id.btn_createUser);
 
         btn_signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,17 +54,20 @@ public class CreateUserActivity extends AppCompatActivity {
     }
 
     private void CreateNewUser(){
-        String email;
-        String pwd;
-        String pwd2;
-        email = input_email.getText().toString();
-        pwd = input_pwd.getText().toString();
-        pwd2 = input_pwd2.getText().toString();
 
-        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pwd) || TextUtils.isEmpty(pwd2)) {
+        email = input_email.getText().toString();
+        pwd   = input_pwd.getText().toString();
+        pwd2  = input_pwd2.getText().toString();
+        // Check if passwords match
+        if(pwd == pwd2){
+            Toast.makeText(CreateUserActivity.this, "Passwords don't match", Toast.LENGTH_LONG).show();
+        }
+        //Check If Empty
+        else if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pwd) || TextUtils.isEmpty(pwd2)) {
             Toast.makeText(CreateUserActivity.this, "Please fill all fields", Toast.LENGTH_LONG).show();
         }
         else{
+            //SignUP
             mAuth.createUserWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -74,7 +87,7 @@ public class CreateUserActivity extends AppCompatActivity {
 
                             }
 
-                            // ...
+
                         }
                     });
         }
