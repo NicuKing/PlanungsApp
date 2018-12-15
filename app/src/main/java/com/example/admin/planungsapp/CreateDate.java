@@ -27,7 +27,7 @@ public class CreateDate extends AppCompatActivity implements View.OnClickListene
     private Button btn_firebase;
     private DatabaseReference Database;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private String dateName;
+    private String dateName, projectName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +61,19 @@ public class CreateDate extends AppCompatActivity implements View.OnClickListene
     public String getDateName(){
         return dateName = inp_name.getText().toString();
     }
+    public String getProjectName() { return projectName = getIntent().getStringExtra("projektName");}
 
     /**
      * Diese Methode erstellt den Termin
      */
     private void createDate(){
         Database.child("Projekte")
-                .child("Sebi")
+                .child(getProjectName())
                 .child("Termine")
                 .child(getDateName())
                 .child("Datum").setValue(mYear + "." + mMonth + "." + mDay );
         Database.child("Projekte")
-                .child("Sebi")
+                .child(getProjectName())
                 .child("Termine")
                 .child(getDateName())
                 .child("Zeit").setValue(mHour + ":" + mMinute);
@@ -82,9 +83,13 @@ public class CreateDate extends AppCompatActivity implements View.OnClickListene
 
         if (view == selectDate) {
             final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
+            /*mYear = c.get(Calendar.YEAR);
             mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);*/
+            Intent intent = getIntent();
+            mYear = intent.getIntExtra("year",2000);
+            mMonth = intent.getIntExtra("month",10);
+            mDay = intent.getIntExtra("dayOfMonth",10);
 
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
@@ -114,10 +119,9 @@ public class CreateDate extends AppCompatActivity implements View.OnClickListene
                         @Override
                         public void onTimeSet(TimePicker view, int hourOfDay,
                                               int minute) {
-
                             selectTime.setText(hourOfDay + ":" + minute);
                         }
-                    }, mHour, mMinute, false);
+                    }, mHour, mMinute, true);
             timePickerDialog.show();
         }
     }
