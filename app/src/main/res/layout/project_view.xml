@@ -13,8 +13,13 @@
 
         <TextView
             android:id="@+id/projectName"
+<<<<<<< HEAD
             android:layout_width="wrap_content"
             android:layout_height="20dp" />
+=======
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+>>>>>>> 7365fbba4aef93ff40331112bc7fbf88920ea4b5
 
 
         <Button
@@ -25,7 +30,7 @@
             android:text="Tasks erstellen" />
 
         <Button
-            android:id="@+id/btnToCreateDate"
+            android:id="@+id/btnToAddUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="110dp"
@@ -45,6 +50,14 @@
             android:layout_marginTop="220dp">
 
         </ListView>
+
+        <TextView
+            android:id="@+id/txtEmptyList"
+            android:layout_below="@+id/btnToCalender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
     </RelativeLayout>
 
 

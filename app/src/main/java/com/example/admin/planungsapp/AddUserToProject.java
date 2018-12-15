@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
 /**
  * Diese Activity ist dazu da andere Benutzer zu seinemProekt hinzuzufügen.
  * @author Nicolas Lachenal
@@ -35,6 +36,7 @@ public class AddUserToProject extends AppCompatActivity {
     private DatabaseReference database, checkUser;
     private Intent lastIntent;
 
+
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
@@ -45,6 +47,7 @@ public class AddUserToProject extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+
         //Views
         addUserButton = findViewById(R.id.btnDoAdd);
         addUserUid = findViewById(R.id.txtAddUser);
@@ -96,6 +99,6 @@ public class AddUserToProject extends AppCompatActivity {
         };
 
         checkUser.addListenerForSingleValueEvent(eventListener);
-
+        
     }
 }
