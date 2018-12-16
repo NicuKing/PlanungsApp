@@ -21,15 +21,15 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class ChangeTasks extends AppCompatActivity {
 
-    private EditText txtE_ChangeTasks_TaskName;
-    private Button btn_ChangeTasks_ChangeTaskName;
-    private Button btn_ChangeTasks_DeleteTask;
-    private String str_ChangeTasks_TaskName;
+    private EditText txtE_ChangeTask_NewTaskName;
+    private Button btn_ChangeTask_UpdateTask;
+    private Button btn_ChangeTask_DeleteTask;
+    private String name;
     private DatabaseReference Database;
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf den Buttons btn_ChangeTasks_ChangeTaskName und btn_ChangeTasks_DeleteTask ein OnClickListener durchgeführt
+     * Es wird auf den Buttons btn_ChangeTask_UpdateTask und btn_ChangeTask_DeleteTask ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -47,20 +47,20 @@ public class ChangeTasks extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
-        txtE_ChangeTasks_TaskName      = findViewById(R.id.txtTaskName_Change);
-        btn_ChangeTasks_ChangeTaskName = findViewById(R.id.btnChangeTasks);
-        btn_ChangeTasks_DeleteTask     = findViewById(R.id.btnChangeTasks);
+        txtE_ChangeTask_NewTaskName  = findViewById(R.id.txtTaskName_Change);
+        btn_ChangeTask_UpdateTask = findViewById(R.id.btnChangeTasks);
+        btn_ChangeTask_DeleteTask = findViewById(R.id.btnDeleteTasks);
 
         Intent getIntent = getIntent();
-        str_ChangeTasks_TaskName = getIntent.getStringExtra("txtE_ChangeTasks_TaskName");
-        btn_ChangeTasks_DeleteTask.setOnClickListener(new View.OnClickListener() {
+        name = getIntent.getStringExtra("taskName");
+        btn_ChangeTask_DeleteTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteTask();
             }
         });
 
-        btn_ChangeTasks_ChangeTaskName.setOnClickListener(new View.OnClickListener() {
+        btn_ChangeTask_UpdateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateTask();
@@ -76,20 +76,20 @@ public class ChangeTasks extends AppCompatActivity {
         Database = FirebaseDatabase.getInstance().getReference();
         Intent oldIntent = getIntent();
 
-        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(str_ChangeTasks_TaskName).removeValue();
+        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).removeValue();
         Intent intent = new Intent(getApplicationContext(), ViewProject.class);
         intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
         startActivity(intent);
     }
 
     /**
-     * Der Ausgewählt Task wird mit den Nutzereingabe(txtE_ChangeTasks_TaskName) geupdated
+     * Der Ausgewählt Task wird mit den Nutzereingabe(taskName) geupdated
      */
     private void updateTask(){
         Database = FirebaseDatabase.getInstance().getReference();
         Intent oldIntent = getIntent();
 
-        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(str_ChangeTasks_TaskName).setValue(txtE_ChangeTasks_TaskName);
+        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).setValue(txtE_ChangeTask_NewTaskName);
         Intent intent = new Intent(getApplicationContext(), ViewProject.class);
         intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
         startActivity(intent);
