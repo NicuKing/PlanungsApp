@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class ViewProject extends AppCompatActivity {
 
-    private TextView projectName, ListEmpty;
+    private TextView projectName, projectDescrip;
     private Button toAddTask, btnToAddUser, toCalender;
     private ListView listTast;
     private ArrayAdapter taskListe;
@@ -51,14 +51,17 @@ public class ViewProject extends AppCompatActivity {
 
         //Views
         projectName    = findViewById(R.id.projectName);
+        projectDescrip = findViewById(R.id.projectDescription);
         btnToAddUser   = findViewById(R.id.btnToAddUser);
         toAddTask      = findViewById(R.id.btnToCreateTask);
         toCalender     = findViewById(R.id.btnToCalender);
-        ListEmpty      = findViewById(R.id.txtEmptyList);
 
         Intent intent  = getIntent();
         String proName = intent.getStringExtra("ProjektName");
-        projectName.setText(intent.getStringExtra("ProjektName"));
+        String[] proNameTitel = proName.split("_");
+        projectName.setText(proNameTitel[1]);
+
+        projectDescrip.setText(FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("beschreibung").toString());
 
         toAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,10 +87,32 @@ public class ViewProject extends AppCompatActivity {
         if(!existingTasks(proName)) {
             addTasksToList(proName);
         }
+        getDescription(proName);
+    }
+
+    /**
+     * hohlt die Beschreibung zu dem ausgewählten Projekt.
+     * @param proName
+     */
+    private void getDescription(String proName) {
+        DatabaseReference description = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("beschreibung");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                 projectDescrip.setText(dataSnapshot.getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+            }
+        };
+        description.addValueEventListener(postListener);
     }
 
     /**
      * Schaut ob Tasks existieren, bevor es die addTasksToList Methode ausführt.
+     * @praam proName
      * @return boolean
      */
     private boolean existingTasks(String proName) {
