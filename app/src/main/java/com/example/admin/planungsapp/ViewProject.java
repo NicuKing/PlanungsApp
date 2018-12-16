@@ -1,5 +1,6 @@
 package com.example.admin.planungsapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -33,6 +35,7 @@ public class ViewProject extends AppCompatActivity {
     private ListView listTast;
     private ArrayAdapter taskListe;
     private RelativeLayout listUD;
+    private boolean exist;
     private ArrayList<String> taskName = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
     /**
@@ -78,7 +81,37 @@ public class ViewProject extends AppCompatActivity {
             }
         });
 
+        if(!existingTasks(proName)) {
             addTasksToList(proName);
+        }
+    }
+
+    /**
+     * Schaut ob Tasks existieren, bevor es die addTasksToList Methode ausführt.
+     * @return boolean
+     */
+    private boolean existingTasks(String proName) {
+        DatabaseReference checkTask = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Checkt ob dieser Benutzer überhaupt vorhanden ist.
+                if(!dataSnapshot.exists()) {
+                    exist = false;
+                } else {
+                    // Das Projekt wird zu den Projekten des Nutzers hinzugefügt
+                    exist = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        checkTask.addListenerForSingleValueEvent(eventListener);
+        return exist;
     }
 
     /**
@@ -86,9 +119,8 @@ public class ViewProject extends AppCompatActivity {
      * @param proName Projektname
      */
     private void addTasksToList(String proName) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
         listTast = (ListView)findViewById(R.id.lstTasks);
-
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
         taskListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,taskName);
         listTast.setAdapter(taskListe);
 
@@ -152,7 +184,6 @@ public class ViewProject extends AppCompatActivity {
     private void toAddUser(){
 
         Intent toAddUser = new Intent(getApplicationContext(),AddUserToProject.class);
-
         Intent lastIntent = getIntent();
         // Replace with Create Activity
         toAddUser.putExtra("projektName", lastIntent.getStringExtra("ProjektName"));

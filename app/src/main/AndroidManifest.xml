@@ -58,6 +58,8 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
         <activity android:name=".CreateDate" />
+        <activity android:name=".CreateTask" />
+
         <activity android:name=".ViewDate"></activity>
         <activity
             android:name=".ChangeTasks"

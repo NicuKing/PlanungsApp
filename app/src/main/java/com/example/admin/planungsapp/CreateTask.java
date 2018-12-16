@@ -52,15 +52,19 @@ public class CreateTask extends AppCompatActivity {
      * In dieser Methode werden Tasks zu dem Projekt in dem sich der Benutzer gerae befindet erstellt
      */
     private void addTask(){
-
-        database = FirebaseDatabase.getInstance().getReference();
-        Intent oldIntent = getIntent();
-        taskName = inpTask.getText().toString();
-        // Task hinzufügen zum Projekt
-         database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(taskName).setValue(taskName);
-        // Zurück zur ViewProject Activity
-        Intent intent = new Intent(getApplicationContext(), ViewProject.class);
-        intent.putExtra("ProjektName",projectName);
-        startActivity(intent);
+        if(inpTask.getText().toString().equals("")) {
+            inpTask.setHintTextColor(getResources().getColor(R.color.colorAccent));
+        } else {
+            Intent oldIntent = getIntent();
+            String Projekt = oldIntent.getStringExtra("projectName");
+            database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(Projekt);
+            taskName = inpTask.getText().toString();
+            // Task hinzufügen zum Projekt
+            database.child("Anforderungen").child(taskName).setValue(taskName);
+            // Zurück zur ViewProject Activity
+            Intent intent = new Intent(getApplicationContext(), ViewProject.class);
+            intent.putExtra("ProjektName", Projekt);
+            startActivity(intent);
+        }
     }
 }

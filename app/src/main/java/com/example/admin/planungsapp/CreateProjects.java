@@ -1,5 +1,6 @@
 package com.example.admin.planungsapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,8 +24,7 @@ public class CreateProjects extends AppCompatActivity {
 
     private Button firebaseButton;
     private DatabaseReference database;
-    private EditText name;
-    private EditText description;
+    private EditText name, description;
     private String uId;
 
     private FirebaseAuth Auth;
@@ -57,17 +57,30 @@ public class CreateProjects extends AppCompatActivity {
     }
 
     /**
-     * Diese Klasse erstellt Projekte und fügt die Projekte dem Angemeldeten Benutzer hinzu
+     * Diese Methode erstellt Projekte und fügt die Projekte dem Angemeldeten Benutzer hinzu
      */
+    @SuppressLint("SetTextI18n")
     private void createProject(){
-        // Projektname besteht aus uid des Ersteller und Projektnamen
-        String FullProjectName = uId+"_"+name.getText().toString();
-        // Projekt erstellen
-        database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(description.getText().toString());
-        // Projekt Benutzer hinzufügen
-        database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
-        Intent intentMain = new Intent(CreateProjects.this ,
-                HomeActivity.class);
-        CreateProjects.this.startActivity(intentMain);
+        //wird gebraucht um zu überprüfen, dass beide EditTexts nicht leer sind.
+        boolean valid = true;
+        if(name.getText().toString().equals("")) {
+            name.setHintTextColor(getResources().getColor(R.color.colorAccent));
+            valid = false;
+        }
+        if (description.getText().toString().equals("")) {
+            description.setHintTextColor(getResources().getColor(R.color.colorAccent));
+            valid = false;
+        }
+        if (valid) {
+            // Projektname besteht aus uid des Ersteller und Projektnamen
+            String FullProjectName = uId + "_" + name.getText().toString();
+            // Projekt erstellen
+            database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(description.getText().toString());
+            // Projekt Benutzer hinzufügen
+            database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
+            Intent intentMain = new Intent(CreateProjects.this,
+                    HomeActivity.class);
+            CreateProjects.this.startActivity(intentMain);
+        }
     }
 }
