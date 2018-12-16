@@ -26,8 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class CreateUserActivity extends AppCompatActivity {
 
-    private EditText input_email, input_pwd,input_pwd2;
-    private Button btn_signUp;
+    private EditText txtE_CreateUserActivity_Email, txtE_CreateUserActivity_Password,txtE_CreateUserActivity_Password2;
+    private Button btn_CreateUserActivity_SignUp;
     private String email,pwd, pwd2,uID;
     private DatabaseReference database;
     private FirebaseAuth mAuth;
@@ -36,7 +36,7 @@ public class CreateUserActivity extends AppCompatActivity {
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf dem Button btn_signUp ein OnClickListener durchgeführt
+     * Es wird auf dem Button btn_CreateUserActivity_SignUp ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -46,12 +46,12 @@ public class CreateUserActivity extends AppCompatActivity {
 
         //Views
 
-        input_email = findViewById(R.id.txt_createUser_email);
-        input_pwd   = findViewById(R.id.txt_createUser_pwd);
-        input_pwd2  = findViewById(R.id.txt_createUser_pwd2);
-        btn_signUp  = findViewById(R.id.btn_createUser);
+        txtE_CreateUserActivity_Email = findViewById(R.id.txt_createUser_email);
+        txtE_CreateUserActivity_Password   = findViewById(R.id.txt_createUser_pwd);
+        txtE_CreateUserActivity_Password2  = findViewById(R.id.txt_createUser_pwd2);
+        btn_CreateUserActivity_SignUp  = findViewById(R.id.btn_createUser);
 
-        btn_signUp.setOnClickListener(new View.OnClickListener() {
+        btn_CreateUserActivity_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CreateNewUser();
@@ -64,9 +64,9 @@ public class CreateUserActivity extends AppCompatActivity {
      */
     private void CreateNewUser(){
 
-        email = input_email.getText().toString();
-        pwd   = input_pwd.getText().toString();
-        pwd2  = input_pwd2.getText().toString();
+        email = txtE_CreateUserActivity_Email.getText().toString();
+        pwd   = txtE_CreateUserActivity_Password.getText().toString();
+        pwd2  = txtE_CreateUserActivity_Password2.getText().toString();
         // Check if passwords match
         mAuth = FirebaseAuth.getInstance();
         if(pwd == pwd2){

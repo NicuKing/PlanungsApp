@@ -18,8 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class CreateTask extends AppCompatActivity {
 
-    private EditText inpTask;
-    private Button btnAddTask;
+    private EditText txtE_CreateTask_TaskName;
+    private Button btn_CreateTask_addTask;
     private String taskName;
     private String projectName;
     private DatabaseReference database;
@@ -27,7 +27,7 @@ public class CreateTask extends AppCompatActivity {
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf dem Button btnAddTask ein OnClickListener durchgeführt
+     * Es wird auf dem Button btn_CreateTask_addTask ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -36,10 +36,10 @@ public class CreateTask extends AppCompatActivity {
         setContentView(R.layout.activity_create_task);
 
         //Views
-        inpTask     = findViewById(R.id.txtTaskName);
-        btnAddTask = findViewById(R.id.btnAddTasks);
+        txtE_CreateTask_TaskName     = findViewById(R.id.txtTaskName);
+        btn_CreateTask_addTask = findViewById(R.id.btnAddTasks);
 
-        btnAddTask.setOnClickListener(new View.OnClickListener() {
+        btn_CreateTask_addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addTask();
@@ -52,13 +52,13 @@ public class CreateTask extends AppCompatActivity {
      * In dieser Methode werden Tasks zu dem Projekt in dem sich der Benutzer gerae befindet erstellt
      */
     private void addTask(){
-        if(inpTask.getText().toString().equals("")) {
-            inpTask.setHintTextColor(getResources().getColor(R.color.colorAccent));
+        if(txtE_CreateTask_TaskName.getText().toString().equals("")) {
+            txtE_CreateTask_TaskName.setHintTextColor(getResources().getColor(R.color.colorAccent));
         } else {
             Intent oldIntent = getIntent();
             String Projekt = oldIntent.getStringExtra("projectName");
             database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(Projekt);
-            taskName = inpTask.getText().toString();
+            taskName = txtE_CreateTask_TaskName.getText().toString();
             // Task hinzufügen zum Projekt
             database.child("Anforderungen").child(taskName).setValue(taskName);
             // Zurück zur ViewProject Activity

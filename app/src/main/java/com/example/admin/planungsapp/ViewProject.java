@@ -2,6 +2,7 @@ package com.example.admin.planungsapp;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,9 +31,9 @@ import java.util.ArrayList;
  */
 public class ViewProject extends AppCompatActivity {
 
-    private TextView projectName, projectDescrip;
-    private Button toAddTask, btnToAddUser, toCalender;
-    private ListView listTast;
+    private TextView txtV_ViewProject_ProjectName, txtV_ViewProject_ProjectDescription;
+    private Button btn_ViewProject_ToAddTask, btn_ViewProject_ToAddUser, btn_ViewProject_ToCalendar;
+    private ListView lst_ViewProject_allTasks;
     private ArrayAdapter taskListe;
     private RelativeLayout listUD;
     private boolean exist;
@@ -41,7 +42,7 @@ public class ViewProject extends AppCompatActivity {
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf den Buttons toAddTask, btnToAddUser & toCalender ein OnClickListener durchgeführt
+     * Es wird auf den Buttons btn_ViewProject_ToAddTask, btn_ViewProject_ToAddUser & btn_ViewProject_ToCalendar ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -50,37 +51,37 @@ public class ViewProject extends AppCompatActivity {
         setContentView(R.layout.project_view);
 
         //Views
-        projectName    = findViewById(R.id.projectName);
-        projectDescrip = findViewById(R.id.projectDescription);
-        btnToAddUser   = findViewById(R.id.btnToAddUser);
-        toAddTask      = findViewById(R.id.btnToCreateTask);
-        toCalender     = findViewById(R.id.btnToCalender);
+        txtV_ViewProject_ProjectName        = findViewById(R.id.projectName);
+        txtV_ViewProject_ProjectDescription = findViewById(R.id.projectDescription);
+        btn_ViewProject_ToAddUser           = findViewById(R.id.btnToAddUser);
+        btn_ViewProject_ToAddTask           = findViewById(R.id.btnToCreateTask);
+        btn_ViewProject_ToCalendar          = findViewById(R.id.btnToCalender);
 
         Intent intent  = getIntent();
         String proName = intent.getStringExtra("ProjektName");
         String[] proNameTitel = proName.split("_");
-        projectName.setText(proNameTitel[1]);
+        txtV_ViewProject_ProjectName.setText(proNameTitel[1]);
 
-        projectDescrip.setText(FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("beschreibung").toString());
+        txtV_ViewProject_ProjectDescription.setText(FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("beschreibung").toString());
 
-        toAddTask.setOnClickListener(new View.OnClickListener() {
+        btn_ViewProject_ToAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toAddTask();
             }
         });
 
-        btnToAddUser.setOnClickListener(new View.OnClickListener() {
+        btn_ViewProject_ToAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toAddUser();
             }
         });
 
-        toCalender.setOnClickListener(new View.OnClickListener() {
+        btn_ViewProject_ToCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toCalender();
+                ToCalendar();
             }
         });
 
@@ -99,7 +100,8 @@ public class ViewProject extends AppCompatActivity {
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 projectDescrip.setText(dataSnapshot.getValue().toString());
+                txtV_ViewProject_ProjectDescription.setText(dataSnapshot.getValue().toString());
+                txtV_ViewProject_ProjectDescription.setPaintFlags(txtV_ViewProject_ProjectDescription.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
             }
 
             @Override
@@ -144,10 +146,10 @@ public class ViewProject extends AppCompatActivity {
      * @param proName Projektname
      */
     private void addTasksToList(String proName) {
-        listTast = (ListView)findViewById(R.id.lstTasks);
+        lst_ViewProject_allTasks = (ListView)findViewById(R.id.lstTasks);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
         taskListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,taskName);
-        listTast.setAdapter(taskListe);
+        lst_ViewProject_allTasks.setAdapter(taskListe);
 
         final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
@@ -200,7 +202,7 @@ public class ViewProject extends AppCompatActivity {
 
             }
         });
-        listTast.setOnItemClickListener(ListClickedHandler);
+        lst_ViewProject_allTasks.setOnItemClickListener(ListClickedHandler);
     }
 
     /**
@@ -228,7 +230,7 @@ public class ViewProject extends AppCompatActivity {
     /**
      * Umleitung zur Kalender Activity
      */
-    private void toCalender(){
+    private void ToCalendar(){
         Intent toDate = new Intent(getApplicationContext(),MainCalender.class);
         Intent lastIntent = getIntent();
         toDate.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
