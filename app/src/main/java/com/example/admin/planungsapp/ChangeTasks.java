@@ -21,15 +21,15 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class ChangeTasks extends AppCompatActivity {
 
-    private EditText taskName;
-    private Button btnChange;
-    private Button btnDelete;
+    private EditText txtE_ChangeTask_NewTaskName;
+    private Button btn_ChangeTask_UpdateTask;
+    private Button btn_ChangeTask_DeleteTask;
     private String name;
     private DatabaseReference Database;
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf den Buttons btnChange und btnDelete ein OnClickListener durchgeführt
+     * Es wird auf den Buttons btn_ChangeTask_UpdateTask und btn_ChangeTask_DeleteTask ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -47,20 +47,20 @@ public class ChangeTasks extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });*/
-        taskName  = findViewById(R.id.txtTaskName_Change);
-        btnChange = findViewById(R.id.btnChangeTasks);
-        btnDelete = findViewById(R.id.btnDeleteTasks);
+        txtE_ChangeTask_NewTaskName  = findViewById(R.id.txtTaskName_Change);
+        btn_ChangeTask_UpdateTask = findViewById(R.id.btnChangeTasks);
+        btn_ChangeTask_DeleteTask = findViewById(R.id.btnDeleteTasks);
 
         Intent getIntent = getIntent();
         name = getIntent.getStringExtra("taskName");
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        btn_ChangeTask_DeleteTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 deleteTask();
             }
         });
 
-        btnChange.setOnClickListener(new View.OnClickListener() {
+        btn_ChangeTask_UpdateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateTask();
@@ -89,7 +89,7 @@ public class ChangeTasks extends AppCompatActivity {
         Database = FirebaseDatabase.getInstance().getReference();
         Intent oldIntent = getIntent();
 
-        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).setValue(taskName);
+        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).setValue(txtE_ChangeTask_NewTaskName);
         Intent intent = new Intent(getApplicationContext(), ViewProject.class);
         intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
         startActivity(intent);

@@ -23,8 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class MainLogin extends AppCompatActivity {
 
-    private EditText inp_email,inp_pwd;
-    private Button btn_login, btn_toSignUp;
+    private EditText txtE_MainLogin_Email,txtE_MainLogin_Password;
+    private Button btn_MainLogin_doLogin, btn_MainLogin_ToSignUp;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener authListener;
@@ -32,7 +32,7 @@ public class MainLogin extends AppCompatActivity {
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf den Buttons btn_login udn btn_SignUp wird ein OnClickListener durchgeführt
+     * Es wird auf den Buttons btn_MainLogin_doLogin udn btn_SignUp wird ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -42,10 +42,10 @@ public class MainLogin extends AppCompatActivity {
 
         mAuth        = FirebaseAuth.getInstance();
 
-        inp_email    = findViewById(R.id.txt_login_email);
-        inp_pwd      = findViewById(R.id.txt_login_pwd);
-        btn_login    = findViewById(R.id.btn_login);
-        btn_toSignUp = findViewById(R.id.btn_toSignUp);
+        txtE_MainLogin_Email    = findViewById(R.id.txt_login_email);
+        txtE_MainLogin_Password      = findViewById(R.id.txt_login_pwd);
+        btn_MainLogin_doLogin    = findViewById(R.id.btn_login);
+        btn_MainLogin_ToSignUp = findViewById(R.id.btn_toSignUp);
 
         /**
          * Authentication Listener checkt ob benuter eingelggt ist
@@ -59,13 +59,13 @@ public class MainLogin extends AppCompatActivity {
                 }
             }
         };
-        btn_toSignUp.setOnClickListener(new View.OnClickListener() {
+        btn_MainLogin_ToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainLogin.this,CreateUserActivity.class));
             }
         });
-        btn_login.setOnClickListener(new View.OnClickListener() {
+        btn_MainLogin_doLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startSignIn();
@@ -86,8 +86,8 @@ public class MainLogin extends AppCompatActivity {
      * Starten Login mit Firebase Athentication
      */
     private void startSignIn(){
-        String email = inp_email.getText().toString();
-        String password = inp_pwd.getText().toString();
+        String email = txtE_MainLogin_Email.getText().toString();
+        String password = txtE_MainLogin_Password.getText().toString();
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(MainLogin.this, "Please fill all fields", Toast.LENGTH_LONG).show();
         }

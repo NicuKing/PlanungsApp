@@ -28,11 +28,11 @@ import com.google.firebase.database.ValueEventListener;
 public class AddUserToProject extends AppCompatActivity {
 
 
-    private Button addUserButton;
-    private TextView notFound;
-    private EditText addUserUid;
-    private String uId;
-    private String proName;
+    private Button btn_AddUserToProject_DoAdd;
+    private TextView txtV_AddUserToProject_Error;
+    private EditText txtE_AddUserToProject_AddedUserID;
+    private String str_AddUserToProject_UserID;
+    private String str_AddUserToProject_ProjektName;
     private DatabaseReference database, checkUser;
     private Intent lastIntent;
 
@@ -40,7 +40,7 @@ public class AddUserToProject extends AppCompatActivity {
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf dem Button addUserButton ein OnClickListener durchgeführt
+     * Es wird auf dem Button btn_AddUserToProject_DoAdd ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -49,17 +49,17 @@ public class AddUserToProject extends AppCompatActivity {
         setContentView(R.layout.activity_add_user);
 
         //Views
-        addUserButton = findViewById(R.id.btnDoAdd);
-        addUserUid    = findViewById(R.id.txtAddUser);
-        notFound      = findViewById(R.id.txtNotFound);
-        //Database reference and get uid
-        database   = FirebaseDatabase.getInstance().getReference().child("User_Projekt");
-        uId        = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        lastIntent = getIntent();
+        btn_AddUserToProject_DoAdd           = findViewById(R.id.btnDoAdd);
+        txtE_AddUserToProject_AddedUserID    = findViewById(R.id.txtAddUser);
+        txtV_AddUserToProject_Error          = findViewById(R.id.txtNotFound);
+        //Database reference and get str_AddUserToProject_UserID
+        database                             = FirebaseDatabase.getInstance().getReference().child("User_Projekt");
+        str_AddUserToProject_UserID          = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        lastIntent                           = getIntent();
         //last Intent values
-        proName    = lastIntent.getStringExtra("projektName");
+        str_AddUserToProject_ProjektName    = lastIntent.getStringExtra("projektName");
         //Button OnClickistener
-        addUserButton.setOnClickListener(new View.OnClickListener() {
+        btn_AddUserToProject_DoAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                addUserToProject();
@@ -73,7 +73,7 @@ public class AddUserToProject extends AppCompatActivity {
      */
     private void addUserToProject(){
         //Schnittstelle Zu den Prjekten vom ausgewählten Benutzer
-        checkUser = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child(addUserUid.getText().toString());
+        checkUser = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child(txtE_AddUserToProject_AddedUserID.getText().toString());
 
         ValueEventListener eventListener = new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -81,13 +81,13 @@ public class AddUserToProject extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Checkt ob dieser Benutzer überhaupt vorhanden ist.
                 if(!dataSnapshot.exists()) {
-                    notFound.setText("User doesn't exist");
+                    txtV_AddUserToProject_Error.setText("User doesn't exist");
                 } else {
                     // Das Projekt wird zu den Projekten des Nutzers hinzugefügt
-                    String FullProjectName = proName;
-                    database.child(addUserUid.getText().toString()).child(FullProjectName).setValue(FullProjectName);
+                    String FullProjectName = str_AddUserToProject_ProjektName;
+                    database.child(txtE_AddUserToProject_AddedUserID.getText().toString()).child(FullProjectName).setValue(FullProjectName);
                     Intent toView = new Intent(AddUserToProject.this, ViewProject.class);
-                    toView.putExtra("ProjektName", proName);
+                    toView.putExtra("ProjektName", str_AddUserToProject_ProjektName);
                     AddUserToProject.this.startActivity(toView);
                 }
             }

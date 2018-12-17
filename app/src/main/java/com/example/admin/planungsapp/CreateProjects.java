@@ -1,5 +1,6 @@
 package com.example.admin.planungsapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,17 +22,16 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 public class CreateProjects extends AppCompatActivity {
 
-    private Button firebaseButton;
+    private Button btn_CreateProjects_CreateProject;
     private DatabaseReference database;
-    private EditText name;
-    private EditText description;
+    private EditText txtE_CreateProjects_ProjectName, txtE_CreateProjects_ProjectDescription;
     private String uId;
 
     private FirebaseAuth Auth;
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf dem Button firebaseButton ein OnClickListener durchgeführt
+     * Es wird auf dem Button btn_CreateProjects_CreateProject ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -41,11 +41,11 @@ public class CreateProjects extends AppCompatActivity {
 
         database       = FirebaseDatabase.getInstance().getReference();
         uId            = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        name           = findViewById(R.id.txtProjectname);
-        description    = findViewById(R.id.txtProdescription);
 
-        firebaseButton = (Button) findViewById(R.id.btnFirebase);
-        firebaseButton.setOnClickListener(new View.OnClickListener() {
+        txtE_CreateProjects_ProjectName           = findViewById(R.id.txtProjectname);
+        txtE_CreateProjects_ProjectDescription    = findViewById(R.id.txtProdescription);
+        btn_CreateProjects_CreateProject          = findViewById(R.id.btnFirebase);
+        btn_CreateProjects_CreateProject.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -57,17 +57,30 @@ public class CreateProjects extends AppCompatActivity {
     }
 
     /**
-     * Diese Klasse erstellt Projekte und fügt die Projekte dem Angemeldeten Benutzer hinzu
+     * Diese Methode erstellt Projekte und fügt die Projekte dem Angemeldeten Benutzer hinzu
      */
+    @SuppressLint("SetTextI18n")
     private void createProject(){
-        // Projektname besteht aus uid des Ersteller und Projektnamen
-        String FullProjectName = uId+"_"+name.getText().toString();
-        // Projekt erstellen
-        database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(description.getText().toString());
-        // Projekt Benutzer hinzufügen
-        database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
-        Intent intentMain = new Intent(CreateProjects.this ,
-                HomeActivity.class);
-        CreateProjects.this.startActivity(intentMain);
+        //wird gebraucht um zu überprüfen, dass beide EditTexts nicht leer sind.
+        boolean valid = true;
+        if(txtE_CreateProjects_ProjectName.getText().toString().equals("")) {
+            txtE_CreateProjects_ProjectName.setHintTextColor(getResources().getColor(R.color.colorAccent));
+            valid = false;
+        }
+        if (txtE_CreateProjects_ProjectDescription.getText().toString().equals("")) {
+            txtE_CreateProjects_ProjectDescription.setHintTextColor(getResources().getColor(R.color.colorAccent));
+            valid = false;
+        }
+        if (valid) {
+            // Projektname besteht aus uid des Ersteller und Projektnamen
+            String FullProjectName = uId + "_" + txtE_CreateProjects_ProjectName.getText().toString();
+            // Projekt erstellen
+            database.child("Projekte").child(FullProjectName).child("beschreibung").setValue(txtE_CreateProjects_ProjectDescription.getText().toString());
+            // Projekt Benutzer hinzufügen
+            database.child("User_Projekt").child(uId).child(FullProjectName).setValue(FullProjectName);
+            Intent intentMain = new Intent(CreateProjects.this,
+                    HomeActivity.class);
+            CreateProjects.this.startActivity(intentMain);
+        }
     }
 }

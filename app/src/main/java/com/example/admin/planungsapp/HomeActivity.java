@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView user;
+    private TextView txtV_HomeActivity_User;
     private ArrayList<String> ProjektNamen = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
     private FirebaseAuth Auth;
@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        user = findViewById(R.id.userID);
+        txtV_HomeActivity_User = findViewById(R.id.userID);
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -82,10 +82,10 @@ public class HomeActivity extends AppCompatActivity
         uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("User_Projekt").child(uId);
 
-        ListView projektList = (ListView) findViewById(R.id.lstProjects2);
+        ListView lst_HomeActivity_AllProjects = (ListView) findViewById(R.id.lstProjects2);
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, ProjektNamen);
-        projektList.setAdapter(arrayAdapter);
+        lst_HomeActivity_AllProjects.setAdapter(arrayAdapter);
         // Click events auf dem jeweiligen Items
         final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
@@ -136,7 +136,7 @@ public class HomeActivity extends AppCompatActivity
 
             }
         });
-        projektList.setOnItemClickListener(ListClickedHandler);
+        lst_HomeActivity_AllProjects.setOnItemClickListener(ListClickedHandler);
     }
 
     /**

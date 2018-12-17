@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/useless1"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="33dp"
@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/useless" />
 
     <TextView
-        android:id="@+id/useless2"
+        android:id="@+id/tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="34dp"
@@ -80,7 +80,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/useless1" />
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <EditText
         android:id="@+id/txtProdescription"
@@ -96,6 +96,6 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/useless2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
 
 </android.support.constraint.ConstraintLayout>

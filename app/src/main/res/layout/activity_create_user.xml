@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/txt_createUser_email"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="138dp"
+        android:layout_marginStart="-2dp"
+        android:layout_marginTop="118dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -32,8 +33,10 @@
         android:id="@+id/txt_createUser_pwd2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/txt_createUser_email"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="184dp"
         android:ems="10"
         android:hint="Repeat password"
         android:inputType="textPassword" />
@@ -42,8 +45,18 @@
         android:id="@+id/btn_createUser"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/txt_createUser_pwd"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="143dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="242dp"
         android:text="SignUp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:text="Sing Up" />
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.example.admin.planungsapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -28,17 +31,18 @@ import java.util.ArrayList;
  */
 public class ViewProject extends AppCompatActivity {
 
-    private TextView projectName, ListEmpty;
-    private Button toAddTask, btnToAddUser, toCalender;
-    private ListView listTast;
+    private TextView txtV_ViewProject_ProjectName, txtV_ViewProject_ProjectDescription;
+    private Button btn_ViewProject_ToAddTask, btn_ViewProject_ToAddUser, btn_ViewProject_ToCalendar;
+    private ListView lst_ViewProject_allTasks;
     private ArrayAdapter taskListe;
     private RelativeLayout listUD;
+    private boolean exist;
     private ArrayList<String> taskName = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
     /**
      *
      * Beim Starten dieser Activtvity werden alle Views den Instanzvariablen zugewiesen.
-     * Es wird auf den Buttons toAddTask, btnToAddUser & toCalender ein OnClickListener durchgeführt
+     * Es wird auf den Buttons btn_ViewProject_ToAddTask, btn_ViewProject_ToAddUser & btn_ViewProject_ToCalendar ein OnClickListener durchgeführt
      * @param savedInstanceState
      */
     @Override
@@ -47,38 +51,94 @@ public class ViewProject extends AppCompatActivity {
         setContentView(R.layout.project_view);
 
         //Views
-        projectName    = findViewById(R.id.projectName);
-        btnToAddUser   = findViewById(R.id.btnToAddUser);
-        toAddTask      = findViewById(R.id.btnToCreateTask);
-        toCalender     = findViewById(R.id.btnToCalender);
-        ListEmpty      = findViewById(R.id.txtEmptyList);
+        txtV_ViewProject_ProjectName        = findViewById(R.id.projectName);
+        txtV_ViewProject_ProjectDescription = findViewById(R.id.projectDescription);
+        btn_ViewProject_ToAddUser           = findViewById(R.id.btnToAddUser);
+        btn_ViewProject_ToAddTask           = findViewById(R.id.btnToCreateTask);
+        btn_ViewProject_ToCalendar          = findViewById(R.id.btnToCalender);
 
         Intent intent  = getIntent();
         String proName = intent.getStringExtra("ProjektName");
-        projectName.setText(intent.getStringExtra("ProjektName"));
+        String[] proNameTitel = proName.split("_");
+        txtV_ViewProject_ProjectName.setText(proNameTitel[1]);
 
-        toAddTask.setOnClickListener(new View.OnClickListener() {
+        txtV_ViewProject_ProjectDescription.setText(FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("beschreibung").toString());
+
+        btn_ViewProject_ToAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toAddTask();
             }
         });
 
-        btnToAddUser.setOnClickListener(new View.OnClickListener() {
+        btn_ViewProject_ToAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toAddUser();
             }
         });
 
-        toCalender.setOnClickListener(new View.OnClickListener() {
+        btn_ViewProject_ToCalendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toCalender();
+                ToCalendar();
             }
         });
 
+        if(!existingTasks(proName)) {
             addTasksToList(proName);
+        }
+        getDescription(proName);
+    }
+
+    /**
+     * hohlt die Beschreibung zu dem ausgewählten Projekt.
+     * @param proName
+     */
+    private void getDescription(String proName) {
+        DatabaseReference description = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("beschreibung");
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                txtV_ViewProject_ProjectDescription.setText(dataSnapshot.getValue().toString());
+                txtV_ViewProject_ProjectDescription.setPaintFlags(txtV_ViewProject_ProjectDescription.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+            }
+        };
+        description.addValueEventListener(postListener);
+    }
+
+    /**
+     * Schaut ob Tasks existieren, bevor es die addTasksToList Methode ausführt.
+     * @praam proName
+     * @return boolean
+     */
+    private boolean existingTasks(String proName) {
+        DatabaseReference checkTask = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
+        ValueEventListener eventListener = new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Checkt ob dieser Benutzer überhaupt vorhanden ist.
+                if(!dataSnapshot.exists()) {
+                    exist = false;
+                } else {
+                    // Das Projekt wird zu den Projekten des Nutzers hinzugefügt
+                    exist = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        checkTask.addListenerForSingleValueEvent(eventListener);
+        return exist;
     }
 
     /**
@@ -86,11 +146,10 @@ public class ViewProject extends AppCompatActivity {
      * @param proName Projektname
      */
     private void addTasksToList(String proName) {
+        lst_ViewProject_allTasks = (ListView)findViewById(R.id.lstTasks);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Projekte").child(proName).child("Anforderungen");
-        listTast = (ListView)findViewById(R.id.lstTasks);
-
         taskListe = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,taskName);
-        listTast.setAdapter(taskListe);
+        lst_ViewProject_allTasks.setAdapter(taskListe);
 
         final AdapterView.OnItemClickListener ListClickedHandler = new AdapterView.OnItemClickListener() {
             @Override
@@ -143,7 +202,7 @@ public class ViewProject extends AppCompatActivity {
 
             }
         });
-        listTast.setOnItemClickListener(ListClickedHandler);
+        lst_ViewProject_allTasks.setOnItemClickListener(ListClickedHandler);
     }
 
     /**
@@ -152,7 +211,6 @@ public class ViewProject extends AppCompatActivity {
     private void toAddUser(){
 
         Intent toAddUser = new Intent(getApplicationContext(),AddUserToProject.class);
-
         Intent lastIntent = getIntent();
         // Replace with Create Activity
         toAddUser.putExtra("projektName", lastIntent.getStringExtra("ProjektName"));
@@ -172,8 +230,8 @@ public class ViewProject extends AppCompatActivity {
     /**
      * Umleitung zur Kalender Activity
      */
-    private void toCalender(){
-        Intent toDate = new Intent(getApplicationContext(),MainCalendar.class);
+    private void ToCalendar(){
+        Intent toDate = new Intent(getApplicationContext(),MainCalender.class);
         Intent lastIntent = getIntent();
         toDate.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
         startActivity(toDate);
