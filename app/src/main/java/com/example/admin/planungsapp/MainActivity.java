@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent calender = new Intent(MainActivity.this, MainCalender.class);
+                Intent calender = new Intent(MainActivity.this, MainCalendar.class);
 
                 startActivity(calender);
 
