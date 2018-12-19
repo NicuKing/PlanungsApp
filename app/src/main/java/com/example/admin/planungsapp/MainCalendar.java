@@ -18,7 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 
+import java.security.Key;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,34 +55,44 @@ public class MainCalendar extends AppCompatActivity {
 
         ListView ViewDateList = (ListView) findViewById(R.id.dateList);
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Keys);
+        int[] to = { android.R.id.text1, android.R.id.text2 };
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, DateList);
         ViewDateList.setAdapter(arrayAdapter);
 
         database.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String date = "";
+                int count = 1;
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    DateList.add(child.getValue(String.class));
+                    String key = dataSnapshot.getKey();
+                    if(count % 2 == 0){
+                        DateList.add(key + ":  " + date +" "+ child.getValue(String.class));
+                        count = 1;
+                    }
+                    else{
+                        date = child.getValue(String.class);
+                        count++;
+                    }
                 }
-
-                String key = dataSnapshot.getKey();
-                Keys.add(key);
-
                 arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String date = "";
+                int count = 1;
                 for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    DateList.add(child.getValue(String.class));
+                    String key = dataSnapshot.getKey();
+                    if(count % 2 == 0){
+                        DateList.add(key + ": " + date +" "+ child.getValue(String.class));
+                        count = 1;
+                    }
+                    else{
+                        date = child.getValue(String.class);
+                        count++;
+                    }
                 }
-
-                String key = dataSnapshot.getKey();
-
-                int index = Keys.indexOf(key);
-                DateList.set(index, DateList.get(0));
-                DateList.set(index, DateList.get(1));
-
                 arrayAdapter.notifyDataSetChanged();
             }
             @Override

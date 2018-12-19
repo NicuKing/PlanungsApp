@@ -47,6 +47,7 @@ public class CreateDate extends AppCompatActivity implements View.OnClickListene
                     public void onClick(View view)
                     {
                         createDate();
+                        finish();
                     }
                 });
 

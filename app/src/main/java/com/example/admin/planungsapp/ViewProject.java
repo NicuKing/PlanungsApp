@@ -231,7 +231,7 @@ public class ViewProject extends AppCompatActivity {
      * Umleitung zur Kalender Activity
      */
     private void ToCalendar(){
-        Intent toDate = new Intent(getApplicationContext(),MainCalender.class);
+        Intent toDate = new Intent(getApplicationContext(),MainCalendar.class);
         Intent lastIntent = getIntent();
         toDate.putExtra("projectName", lastIntent.getStringExtra("ProjektName"));
         startActivity(toDate);
