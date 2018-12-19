@@ -60,15 +60,25 @@ public class HomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         txtV_HomeActivity_User = findViewById(R.id.userID);
 
-        /*
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                String uID = FirebaseAuth.getInstance().getUid();
+                String message =" Sehr geehrte\n" +
+                        "Für unser neues Projekt würde ich Ihnen gerne meine uID aus der Planungsapp zukommen lassen.\n" +
+                        "UserID: " + uID + "\n" +
+                        "Mit freundlichen grüssen";
+                String subject = "PlanungsApp uID";
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                intent.putExtra(Intent.EXTRA_TEXT, message);
+                intent.setType("message/rfc822");
+                startActivity(Intent.createChooser(intent,"Choose an E-Mail client!"));
+
             }
-        });*/
+        });
         // Sidebar
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

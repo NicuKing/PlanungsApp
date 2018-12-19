@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -86,12 +87,7 @@ public class ChangeTasks extends AppCompatActivity {
      * Der Ausgewählt Task wird mit den Nutzereingabe(taskName) geupdated
      */
     private void updateTask(){
-        Database = FirebaseDatabase.getInstance().getReference();
-        Intent oldIntent = getIntent();
-
-        Database.child("Projekte").child(oldIntent.getStringExtra("projectName")).child("Anforderungen").child(name).setValue(txtE_ChangeTask_NewTaskName);
-        Intent intent = new Intent(getApplicationContext(), ViewProject.class);
-        intent.putExtra("ProjektName",oldIntent.getStringExtra("projectName"));
-        startActivity(intent);
+        Toast.makeText(ChangeTasks.this, "Not yet implemented",
+                Toast.LENGTH_SHORT).show();
     }
 }
